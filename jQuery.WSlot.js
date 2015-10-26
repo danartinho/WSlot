@@ -19,6 +19,16 @@
 			return;
 		}
 
+		if(options=='get'){
+			// this.trigger('WSlot.get');
+			return this.children('div.wslot-item-selected').index();
+		}
+
+		if(options=='getText'){
+			// this.trigger('WSlot.get');
+			return this.children('div.wslot-item-selected').text();
+		}
+
 		var opts = $.extend({},$.fn.WSlot.defaults,options);
 
 		this.off('WSlot.rollTo').on('WSlot.rollTo',function(event,to){
@@ -44,8 +54,10 @@
 				center_index = opts.items.length - 1;
 			} else if(opts.center == 'center') {
 				center_index = parseInt(opts.items.length / 2);
-			} else if($.isNumeric(opts.center) && (opts.center >= 0) && (opts.center < opts.center.length)) {
+			} else if($.isNumeric(opts.center) && (opts.center >= 0) && (opts.center < opts.items.length)) {
 				center_index = opts.center;
+			} else if(opts.center >= opts.items.length) {
+				center_index = opts.items.length-1;
 			} else {
 				center_index = 0;
 			}
@@ -70,10 +82,10 @@
 					opacity = 1 - (Math.abs(angle)/(max_angle*2));
 					// scale = 1 - (Math.abs(angle)/(max_angle*20));
 				}
-				item += '<div style="transform:rotateX('+angle+'deg) translate3d(0,0,'+distance+'px);'+displayed+style+'opacity:'+opacity+';">'+opts.items[i]+'</div>';
+				item += '<div class="wslot-item '+((i==center_index)?'wslot-item-selected':'')+'" style="transform:rotateX('+angle+'deg) translate3d(0,0,'+distance+'px);'+displayed+style+'opacity:'+opacity+';">'+opts.items[i]+'</div>';
 			}
 			
-			return this.append(item).data('cur-angle',(center_index*opts.angle))
+			return this.html(item).data('cur-angle',(center_index*opts.angle))
 			.off('touchstart mousedown').on('touchstart mousedown', function(e) {
 				//console.log('start '+getEventPos(e).y);
 				var ini = $(this);
@@ -181,7 +193,7 @@
 				});
 			},function(objek){
 				objek.children('div').each(function () {
-					var curr = $(this);
+					var curr = $(this).removeClass('wslot-item-selected');
 					var options = {};
 					var currAngle = toAngle-(curr.index()*opts.angle);
 					options['display'] = '';
@@ -198,6 +210,9 @@
 					options[xform] = 'rotateX('+currAngle+'deg) translateZ('+distance+'px)';
 					options['opacity'] = opacity;
 					curr.css(options);
+					if(currAngle == 0) {
+						curr.addClass('wslot-item-selected');
+					}
 				});
 				objek.data('cur-angle',toAngle);
 				objek.trigger('WSlot.change',[index]);

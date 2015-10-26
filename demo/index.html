@@ -27,6 +27,7 @@
 
 		<div style="margin:0 auto;text-align:center;">
 			<button id="randomWSlot">random</button>
+			<button id="get">get index</button>
 		</div>
 
 
@@ -51,6 +52,10 @@
 				$('#randomWSlot').click(function(){
 					var rand = Math.floor((Math.random() * 12) + 1);
 					$('#slot').WSlot('rollTo',rand);
+				});
+
+				$('#get').click(function(){
+					alert($('#slot').WSlot('get'));
 				});
 
 			});
