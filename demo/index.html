@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>jQuery WSlot demo</title>
+		<style>
+			#container {
+				background:#ABC;
+				width:200px;
+				height:200px;
+				padding: 0 20px;
+				margin:20px auto;
+			}
+			#slot{
+				width: 100%;
+				height: 100%;
+			}
+			#randomWSlot {
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="container">
+			<div id="slot">
+			</div>
+		</div>
+
+		<div style="margin:0 auto;text-align:center;">
+			<button id="randomWSlot">random</button>
+		</div>
+
+
+        <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="../jQuery.WSlot.min.js"></script>
+
+        <script type="text/javascript">
+        
+			$(document).ready(function(){
+				$('#slot').WSlot({
+					items:['january','february','march','april','may','june','july','august','september','oktober','november','december'],
+					center:'center',
+					angle:25,
+					distance:50,
+					displayed_length:3,
+					rotation:-5,
+					item_height : 20,
+				}).on('WSlot.change',function(e,index){
+					console.log(index);
+				});
+
+				$('#randomWSlot').click(function(){
+					var rand = Math.floor((Math.random() * 12) + 1);
+					$('#slot').WSlot('rollTo',rand);
+				});
+
+			});
+
+        </script>
+
+	</body>
+</html>

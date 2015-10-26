@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<title>WSlot by danartinho</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<style>
+	.container {
+	  background:#567;
+	  width:200px;
+	  height:200px;
+	  position:relative;
+	}
+	.container>div {
+	  font-size:14pt;
+	}
+	</style>
+  </head>
+  <body>
+	
+	<div class="container">
+	  <!-- <div style="transform:rotateX(80deg) translateZ(100px);">
+		a
+	  </div>
+	  <div style="transform:rotateX(60deg) translateZ(100px);">
+		b
+	  </div>
+	  <div style="transform:rotateX(40deg) translateZ(100px);">
+		c
+	  </div>
+	  <div style="transform:rotateX(20deg) translateZ(100px);">
+		d
+	  </div>
+	  <div style="transform:rotateX(0deg) translateZ(100px);">
+		e
+	  </div>
+	  <div style="transform:rotateX(-20deg) translateZ(100px);">
+		f
+	  </div>
+	  <div style="transform:rotateX(-40deg) translateZ(100px);">
+		g
+	  </div>
+	  <div style="transform:rotateX(-60deg) translateZ(100px);">
+		h
+	  </div>
+	  <div style="transform:rotateX(-80deg) translateZ(100px);">
+		i
+	  </div> -->
+	</div>
+	<button id="roll">roll</button>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="jQuery.WSlot.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			// $('.container').off('touchstart mousedown').on('touchstart mousedown', function(e) {
+			// 	//console.log('start '+getEventPos(e).y);
+			// 	var ini = $(this);
+			// 	ini.addClass('w-roll-touched').data('initialtouch', getEventPos(e).y);
+			// 	return false;
+			// }).off('touchmove mousemove').on('touchmove mousemove', function(e) {
+			// 	var ini = $(this);
+			// 	if (ini.is('.w-roll-touched')) {
+			// 	  //console.log('move');
+			// 	}
+			// 	return false;
+			// }).off('touchend mouseup').on('touchend mouseup', function(e) {
+			// 	var ini = $(this);
+			// 	//console.log('end');
+			// 	ini.removeClass('w-roll-touched')
+			// 	return false;
+			// });
+
+			// function getEventPos(e) {
+			// 	//jquery event
+			// 	if (e.originalEvent) {
+			// 	  // touch event
+			// 	  if (e.originalEvent.changedTouches && (e.originalEvent.changedTouches.length >= 1)) {
+			// 		return {
+			// 		  x: e.originalEvent.changedTouches[0].pageX,
+			// 		  y: e.originalEvent.changedTouches[0].pageY
+			// 		};
+			// 	  }
+			// 	  // mouse event
+			// 	  return {
+			// 		x: e.originalEvent.clientX,
+			// 		y: e.originalEvent.clientY
+			// 	  };
+			// 	} else {
+			// 	  // touch event
+			// 	  if (e.changedTouches && (e.changedTouches.length >= 1)) {
+			// 		return {
+			// 		  x: e.changedTouches[0].pageX,
+			// 		  y: e.changedTouches[0].pageY
+			// 		};
+			// 	  }
+			// 	  // mouse event
+			// 	  return {
+			// 		x: e.clientX,
+			// 		y: e.clientY
+			// 	  };
+			// 	}
+			// };
+			$('.container').WSlot({
+				items:['january','february','march','april','may','june','july','august','september','oktober','november','december'],
+				center:'center',
+				angle:25,distance:50,displayed_length:3,rotation:-5}
+			).on('WSlot.change',function(e,index){
+				console.log(index);
+			});
+
+			$('#roll').click(function(){
+				$('.container').WSlot('rollTo',9);
+			});
+		});   
+	</script>
+
+  </body>
+</html>
