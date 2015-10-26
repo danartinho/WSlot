@@ -1,1 +1,0 @@
-java -jar yuicompressor\yuicompressor-2.4.2.jar jQuery.WSlot.js -o jQuery.WSlot.min.js
