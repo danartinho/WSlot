@@ -43,9 +43,9 @@
     <section class="page-header">
       <h1 class="project-name">WSlot</h1>
       <h2 class="project-tagline">jQuery plugin to create a slot rolling list</h2>
-      <a href="https://github.com/danartinho/WSlot" class="btn">View on GitHub</a>
-      <a href="https://github.com/danartinho/WSlot/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/danartinho/WSlot/tarball/master" class="btn">Download .tar.gz</a>
+      <a id="view-github" href="https://github.com/danartinho/WSlot" class="btn">View on GitHub</a>
+      <a id="dl-zip" href="https://github.com/danartinho/WSlot/zipball/master" class="btn">Download .zip</a>
+      <a id="dl-targz" href="https://github.com/danartinho/WSlot/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
@@ -182,7 +182,7 @@
           rotation:5
         }).on('WSlot.change',function(e,index){
           // console.log(index);
-          initDate(parseInt($('.month').WSlot('get')),index,$('.day').WSlot('get'));
+          initDate(parseInt($('.month').WSlot('get')),parseInt($('.year').WSlot('getText')),$('.day').WSlot('get'));
           updateText();
         });
 
@@ -241,6 +241,30 @@
           $('.container').WSlot('rollTo',rand);
         });
 
+        $('#view-github').off('click').on('click',function(){
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'Button',
+            eventAction: 'Click',
+            eventLabel: 'View Github'
+          });
+        });
+        $('#dl-zip').off('click').on('click',function(){
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'Button',
+            eventAction: 'Click',
+            eventLabel: 'Download .zip'
+          });
+        });
+        $('#dl-targz').off('click').on('click',function(){
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'Button',
+            eventAction: 'Click',
+            eventLabel: 'Download .tar.gz'
+          });
+        });
       });
 
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
