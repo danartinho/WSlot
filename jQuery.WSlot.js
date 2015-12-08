@@ -15,23 +15,23 @@
 
 		if(options=='rollTo'){
 			var args = (Array.prototype.slice.call( arguments, 1 ));
-			this.trigger('WSlot.rollTo',args);
+			this.trigger(wslot_rollto,args);
 			return;
 		}
 
 		if(options=='get'){
 			// this.trigger('WSlot.get');
-			return this.children('div.wslot-item-selected').index();
+			return this.children('div.'+class_item_selected).index();
 		}
 
 		if(options=='getText'){
 			// this.trigger('WSlot.get');
-			return this.children('div.wslot-item-selected').text();
+			return this.children('div.'+class_item_selected).text();
 		}
 
 		var opts = $.extend({},$.fn.WSlot.defaults,options);
 
-		this.off('WSlot.rollTo').on('WSlot.rollTo',function(event,to){
+		this.off(wslot_rollto).on(wslot_rollto,function(event,to){
 			self = $(this);
 			if(to) {
 				rollTo(self,to);
@@ -82,16 +82,17 @@
 					opacity = 1 - (Math.abs(angle)/(max_angle*2));
 					// scale = 1 - (Math.abs(angle)/(max_angle*20));
 				}
-				item += '<div class="wslot-item '+((i==center_index)?'wslot-item-selected':'')+'" style="transform:rotateX('+angle+'deg) translate3d(0,0,'+distance+'px);'+displayed+style+'opacity:'+opacity+';">'+opts.items[i]+'</div>';
+				var transform = 'transform:rotateX('+angle+'deg) translate3d(0,0,'+distance+'px);-webkit-transform:rotateX('+angle+'deg) translate3d(0,0,'+distance+'px);';
+				item += '<div class="wslot-item '+((i==center_index)?class_item_selected:'')+'" style="'+transform+displayed+style+'opacity:'+opacity+';">'+opts.items[i]+'</div>';
 			}
 			
 			return this.html(item).data('cur-angle',(center_index*opts.angle))
-			.off('touchstart mousedown').on('touchstart mousedown', function(e) {
+			.off(start).on(start, function(e) {
 				//console.log('start '+getEventPos(e).y);
 				var ini = $(this);
 				ini.addClass('w-roll-touched').data('initialtouch', getEventPos(e).y);
 				return false;
-			}).off('touchmove mousemove').on('touchmove mousemove', function(e) {
+			}).off(move).on(move, function(e) {
 				var ini = $(this);
 				if (ini.is('.w-roll-touched')) {
 					var deltaY = ini.data('initialtouch') - getEventPos(e).y;
@@ -128,7 +129,7 @@
 					});
 				}
 				return false;
-			}).off('touchend mouseup mouseleave').on('touchend mouseup mouseleave', function(e) {
+			}).off(end).on(end, function(e) {
 				var ini = $(this);
 				//console.log('end');
 				if (ini.is('.w-roll-touched')) {
@@ -193,7 +194,7 @@
 				});
 			},function(objek){
 				objek.children('div').each(function () {
-					var curr = $(this).removeClass('wslot-item-selected');
+					var curr = $(this).removeClass(class_item_selected);
 					var options = {};
 					var currAngle = toAngle-(curr.index()*opts.angle);
 					options['display'] = '';
@@ -211,7 +212,7 @@
 					options['opacity'] = opacity;
 					curr.css(options);
 					if(currAngle == 0) {
-						curr.addClass('wslot-item-selected');
+						curr.addClass(class_item_selected);
 					}
 				});
 				objek.data('cur-angle',toAngle);
@@ -238,6 +239,12 @@
             xform = e;
         }
     });
+
+    var start = 'touchstart mousedown';
+    var move = 'touchmove mousemove';
+    var end = 'touchend mouseup mouseleave';
+    var wslot_rollto = 'WSlot.rollTo';
+    var class_item_selected = 'wslot-item-selected';
 
     function animationStep(step, curStep, stepFunc, doneFunc, objek){
 		if(curStep <= step)
